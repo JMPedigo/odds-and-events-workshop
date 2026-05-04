@@ -18,7 +18,6 @@ const odds = [];
  * adds `n` to `bank`
  * @param {number} number - the number to add to the bank
  */
-let n = 0;
 /* adds number to number bank*/
 function addToBank(number) {
   bank.push(number);
@@ -36,16 +35,16 @@ function sort() {
   }
 }
 
-function sortOne () {
-    sort();
-    render();
+function sortOne() {
+  sort();
+  render();
 }
 
-function sortAll () {
-    while bank.length > 1) {
-        sort();
-    } 
-    render();
+function sortAll() {
+  while (bank.length) {
+    sort();
+  }
+  render();
 }
 // === Components ===
 
@@ -64,12 +63,12 @@ function BankForm() {
   $form.innerHTML = `
     <label>
         Add a number to the bank
-        <input type="number" name="number" />
+        <input name="number" type="number" />
     </label>
-    <button type="submit" data-action="add">Add Number</button>
+    <button type="submit" data-action="add">Add number</button>
     <button type="submit" data-action="sortOne">Sort 1</button>
     <button type="submit" data-action="sortAll">Sort All</button>
-  `;  
+  `;
 
   $form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -89,47 +88,52 @@ function BankForm() {
 }
 /**
  * A single number
- * @param {number} n 
+ * @param {number} n
  */
 function NumberInBank(n) {
-    const $span = document.createElement("span");
-    $span.textContent = n;
-    return $span;
+  const $span = document.createElement("span");
+  $span.textContent = n;
+  return $span;
 }
 /**
- * 
- * @param {string} label 
- * @param {number[]} numbers 
+ * A group of numbers.
+ * @param {string} label
+ * @param {number[]} numbers
  */
 function NumberBank(label, numbers) {
-    const $bank = document.createElement("section");
-    $bank.classList.add("bank");
-    $bank.innerHTML = `
+  const $bank = document.createElement("section");
+  $bank.classList.add("bank");
+  $bank.innerHTML = `
         <h2>${label}</h2>
         <output></output>
     `;
+  const $numbers = numbers.map(NumberInBank);
+  $bank.querySelector("output").replaceChildren(...$numbers);
+  return $bank;
 }
 /*
-Numbers are sorted into the correct category based on even or odd.
+numbers are sorted into the correct category based on even or odd.
 */
-
 
 // === Render ===
 
 /* need to initialize a render function
  */
+
 function render() {
   const $app = document.querySelector("#app");
   $app.innerHTML = `
-        <h1>Odds & Events</h1>
-        <BankForm></BankForm>
-        <addNumberToBank></addNumberToBank>
-        <AddOdd></AddOdd>
-        <AddEven></AddEven>
+      <h1>Odds and Events</h1>
+      <BankForm></BankForm>
+      <NumberBank id="bank"></NumberBank>
+      <NumberBank id="odds"></NumberBank>
+      <NumberBank id="evens"></NumberBank>
     `;
-
   $app.querySelector("BankForm").replaceWith(BankForm());
-  $app.querySelector("AddOdd").replaceWith(AddOdd());
-  $app.querySelector("AddEven").replaceWith(AddEven());
+  $app.querySelector("NumberBank#bank").replaceWith(NumberBank("Bank", bank));
+  $app.querySelector("NumberBank#odds").replaceWith(NumberBank("Odds", odds));
+  $app
+    .querySelector("NumberBank#evens")
+    .replaceWith(NumberBank("Evens", evens));
 }
 render();
