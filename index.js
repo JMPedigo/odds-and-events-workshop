@@ -36,6 +36,17 @@ function sort() {
   }
 }
 
+function sortOne () {
+    sort();
+    render();
+}
+
+function sortAll () {
+    while bank.length > 1) {
+        sort();
+    } 
+    render();
+}
 // === Components ===
 
 /*
