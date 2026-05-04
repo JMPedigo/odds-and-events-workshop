@@ -3,17 +3,27 @@
 /* 
 I need a number bank that should display all the numbers user has created.
 */
-const bank = [""];
+const bank = [];
 
 /*
 I need an even container.
 */
-const even = [""];
+const evens = [];
 
 /*
 I need an odd container.
 */
-const odd = [""];
+const odds = [];
+/**
+ * adds `n` to `bank`
+ * @param {number} n - the number to add to the bank
+ */
+let n = 0;
+/* adds number to number bank*/
+function addToBank(n) {
+  bank.push(n);
+  render();
+}
 
 // === Components ===
 
