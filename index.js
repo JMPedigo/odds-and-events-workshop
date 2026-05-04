@@ -62,14 +62,14 @@ function BankForm() {
   const $form = document.createElement("form");
 
   $form.innerHTML = `
-<label>
-    Add a number to the bank
-    <input type="number" name="number" />
-</label>
-<button type="submit">Add Number</button>
-<button type="submit">Sort 1</button>
-<button type="submit">Sort All</button>
-`;
+    <label>
+        Add a number to the bank
+        <input type="number" name="number" />
+    </label>
+    <button type="submit" data-action="add">Add Number</button>
+    <button type="submit" data-action="sortOne">Sort 1</button>
+    <button type="submit" data-action="sortAll">Sort All</button>
+  `;  
 
   $form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -78,21 +78,28 @@ function BankForm() {
       const data = new FormData($form);
       const number = data.get("number");
       if (number === null || number === "") return;
-      addToBank = Number(number);
+      addToBank(+number);
     } else if (action === "sortOne") {
       sortOne();
     } else if (action === "sortAll") {
       sortAll();
     }
   });
+  return $form;
+}
+/**
+ * A single number
+ * @param {number} n 
+ */
+function NumberInBank(n) {
+    const $span = document.createElement("span");
+    $span.textContent = n;
+    return $span;
 }
 /*
 Numbers are sorted into the correct category based on even or odd.
 */
 
-function AddOdd() {}
-
-function AddEven() {}
 
 // === Render ===
 
