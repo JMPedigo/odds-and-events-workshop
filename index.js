@@ -16,13 +16,24 @@ I need an odd container.
 const odds = [];
 /**
  * adds `n` to `bank`
- * @param {number} n - the number to add to the bank
+ * @param {number} number - the number to add to the bank
  */
 let n = 0;
 /* adds number to number bank*/
-function addToBank(n) {
-  bank.push(n);
+function addToBank(number) {
+  bank.push(number);
   render();
+}
+/**
+ * sort number into correct container (odd or even)
+ */
+function sort() {
+  const number = bank.shift();
+  if (number % 2 === 0) {
+    evens.push(number);
+  } else {
+    odds.push(number);
+  }
 }
 
 // === Components ===
@@ -42,12 +53,27 @@ function BankForm() {
   $form.innerHTML = `
 <label>
     Add a number to the bank
-    <input type="number" name="bank" />
+    <input type="number" name="number" />
 </label>
-<button>Add Number</button>
-<button>Sort 1</button>
-<button>Sort All</button>
+<button type="submit">Add Number</button>
+<button type="submit">Sort 1</button>
+<button type="submit">Sort All</button>
 `;
+
+  $form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const action = event.submitter.dataset.action;
+    if (action === "add") {
+      const data = new FormData($form);
+      const number = data.get("number");
+      if (number === null || number === "") return;
+      addToBank = Number(number);
+    } else if (action === "sortOne") {
+      sortOne();
+    } else if (action === "sortAll") {
+      sortAll();
+    }
+  });
 }
 /*
 Numbers are sorted into the correct category based on even or odd.
