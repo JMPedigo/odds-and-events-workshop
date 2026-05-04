@@ -96,6 +96,19 @@ function NumberInBank(n) {
     $span.textContent = n;
     return $span;
 }
+/**
+ * 
+ * @param {string} label 
+ * @param {number[]} numbers 
+ */
+function NumberBank(label, numbers) {
+    const $bank = document.createElement("section");
+    $bank.classList.add("bank");
+    $bank.innerHTML = `
+        <h2>${label}</h2>
+        <output></output>
+    `;
+}
 /*
 Numbers are sorted into the correct category based on even or odd.
 */
